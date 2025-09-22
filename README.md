@@ -77,6 +77,7 @@ DEFAULT_MODE = "simple"         # Options: simple, detailed, holdings, positions
 DEFAULT_SORT_BY = "day_change"  # Options: symbol, quantity, ltp, invested, value, pnl, pnl_pct, day_change
 DEFAULT_SORT_ORDER = "desc"     # Options: asc, desc
 DEFAULT_DEBUG = False           # True to show debug info by default, False to hide
+DEFAULT_EXPORT_CSV = False      # True to export CSV files by default, False to disable
 ```
 
 ### Method 2: Environment Variables
@@ -163,6 +164,21 @@ python zerodha.py --holdings --sort symbol --order asc      # Sort alphabeticall
 --order desc    # Descending order (largest to smallest, default)
 ```
 
+### CSV Export
+Export portfolio data to CSV files for record-keeping and analysis:
+```bash
+python zerodha.py --export       # Simple mode with CSV export
+python zerodha.py --detailed --export  # Detailed mode with CSV export
+python zerodha.py --holdings --export  # Holdings only with CSV export
+```
+
+**CSV Export Features:**
+- **Disabled by default** - No automatic CSV generation
+- **On-demand export** - Use `--export` flag when you need CSV files
+- **Timestamped files** - Each export creates unique timestamped files
+- **Complete data** - Includes day_change column in holdings CSV
+- **Multiple files** - Separate files for holdings, day positions, and net positions
+
 ### Debug Mode
 View raw API responses for troubleshooting:
 ```bash
@@ -176,9 +192,104 @@ chmod +x zerodha.py
 ./zerodha.py                     # Simple mode
 ./zerodha.py --detailed          # Detailed mode
 ./zerodha.py --holdings --sort pnl_pct --order desc  # Holdings sorted by P&L%
+./zerodha.py --export            # Simple mode with CSV export
 ```
 
+Zerodha Portfolio Status @ 2024-01-15_14-30-45 IST
+
+📊 TODAY'S PERFORMANCE
+Portfolio Value: ₹85,250.00
+Total Invested: ₹75,000.00
+Holdings P&L: ₹10,250.00 (↗️ 13.67%)
+
+💹 TRADING PERFORMANCE
+Holdings Day Change: ₹450.75 (↗️ 0.53%)
+Positions Day Trading: ₹-125.50 (↘️ -0.15%)
+Net Positions P&L: ₹2,850.00 (↗️ 3.34%)
+Total P&L: ₹13,100.00 (↗️ 17.47%)
+
+🔥 TOP MOVERS
+📈 Top Gainers:
+  RELIANCE: ₹2,500.00 (↗️ 25.00%)
+  INFY: ₹1,800.00 (↗️ 18.00%)
+  TCS: ₹1,200.00 (↗️ 12.00%)
+📉 Top Losers:
+  HDFC: ₹-300.00 (↘️ -3.00%)
+  ICICIBANK: ₹-150.00 (↘️ -1.50%)
+  SBIN: ₹-100.00 (↘️ -1.00%)
+
+💰 FUNDS
+Available Cash: ₹15,000.00
+Utilised: ₹5,000.00
+```
+
+### Detailed Mode with Sorting
+```
+Zerodha Portfolio Status @ 2024-01-15_14-30-45 IST
+Holdings (sorted by day_change, desc):
+--------------------------------------------------------------------------------------------------------------
+Symbol     | Exch | Qty | Avg     | LTP     | Invested | Value    | PnL     | PnL % | Day Change
+--------------------------------------------------------------------------------------------------------------
+RELIANCE   | NSE  | 10  | 2450.00 | 2500.00 | 24500.00 | 25000.00 | 500.00  | 2.04  | 250.00
+INFY       | NSE  | 20  | 1400.00 | 1450.00 | 28000.00 | 29000.00 | 1000.00 | 3.57  | 180.00
+TCS        | NSE  | 5   | 3200.00 | 3300.00 | 16000.00 | 16500.00 | 500.00  | 3.13  | 120.00
+HDFC       | NSE  | 8   | 1600.00 | 1550.00 | 12800.00 | 12400.00 | -400.00 | -3.13 | -75.00
+ICICIBANK  | NSE  | 15  | 800.00  | 790.00  | 12000.00 | 11850.00 | -150.00 | -1.25 | -45.00
+...
+--------------------------------------------------------------------------------------------------------------
+Total Invested: ₹75,000.00
+Current Value:  ₹85,250.00
+Unrealized PnL: ₹10,250.00 (13.67%)
+Day's Change: ₹450.75 (↗️ 0.53%)
+--------------------------------------------------------------------------------------------------------------
+```
+Zerodha Portfolio Status @ 2025-09-22_19-32-49 IST
+
+📊 TODAY'S PERFORMANCE
+Portfolio Value: ₹127,351.05
+Total Invested: ₹111,079.08
+Holdings P&L: ₹16,271.97 (↗️ 14.65%)
+
+💹 TRADING PERFORMANCE
+Holdings Day Change: ₹810.50 (↗️ 0.64%)
+Positions Day Trading: ₹-73.90 (↘️ -0.06%)
+Net Positions P&L: ₹8,239.10 (↗️ 6.47%)
+Total P&L: ₹24,511.07 (↗️ 22.07%)
+
+🔥 TOP MOVERS
+📈 Top Gainers:
+  WAAREEENER: ₹1,349.65 (↗️ 64.12%)
+  PAUSHAKLTD: ₹2,464.55 (↗️ 55.89%)
+  PERMAGN: ₹4,495.75 (↗️ 38.26%)
+📉 Top Losers:
+  INDIGOPNTS: ₹-141.00 (↘️ -4.10%)
+  RAJOOENG: ₹-183.00 (↘️ -1.92%)
+  NH: ₹-127.20 (↘️ -1.79%)
+
+💰 FUNDS
+Available Cash: ₹13,032.30
+Utilised: ₹12,557.00
+```
+
+### Detailed Mode with Sorting
+```
+Zerodha Portfolio Status @ 2025-09-22_19-38-13 IST
+Holdings (sorted by day_change, desc):
+--------------------------------------------------------------------------------------------------------------
+Symbol     | Exch | Qty | Avg     | LTP     | Invested | Value    | PnL     | PnL % | Day Change
+--------------------------------------------------------------------------------------------------------------
+PERMAGN    | BSE  | 15  | 783.33  | 1083.05 | 11750.00 | 16245.75 | 4495.75 | 38.26 | 773.25
+MOLDTECH   | NSE  | 50  | 142.18  | 174.62  | 7109.24  | 8731.00  | 1621.76 | 22.81 | 632.00
+PAUSHAKLTD | BSE  | 1   | 4410.00 | 6874.55 | 4410.00  | 6874.55  | 2464.55 | 55.89 | 333.70
+...
+--------------------------------------------------------------------------------------------------------------
+Total Invested: ₹111,079.08
+Current Value:  ₹127,351.05
+Unrealized PnL: ₹16,271.97 (14.65%)
+Day's Change: ₹810.50 (↗️ 0.64%)
+```
 ## Example Output
+
 ### Simple Mode (Default)
 ```
 Zerodha Portfolio Status @ 2024-01-15_14-30-45 IST
@@ -226,144 +337,56 @@ ICICIBANK  | NSE  | 15  | 800.00  | 790.00  | 12000.00 | 11850.00 | -150.00 | -1
 Total Invested: ₹75,000.00
 Current Value:  ₹85,250.00
 Unrealized PnL: ₹10,250.00 (13.67%)
-Zerodha Portfolio Status @ 2025-09-22_19-32-49 IST
-
-📊 TODAY'S PERFORMANCE
-Portfolio Value: ₹127,351.05
-Total Invested: ₹111,079.08
-Holdings P&L: ₹16,271.97 (↗️ 14.65%)
-
-💹 TRADING PERFORMANCE
-Holdings Day Change: ₹810.50 (↗️ 0.64%)
-Positions Day Trading: ₹-73.90 (↘️ -0.06%)
-Net Positions P&L: ₹8,239.10 (↗️ 6.47%)
-Total P&L: ₹24,511.07 (↗️ 22.07%)
-
-🔥 TOP MOVERS
-📈 Top Gainers:
-  WAAREEENER: ₹1,349.65 (↗️ 64.12%)
-  PAUSHAKLTD: ₹2,464.55 (↗️ 55.89%)
-  PERMAGN: ₹4,495.75 (↗️ 38.26%)
-📉 Top Losers:
-  INDIGOPNTS: ₹-141.00 (↘️ -4.10%)
-  RAJOOENG: ₹-183.00 (↘️ -1.92%)
-  NH: ₹-127.20 (↘️ -1.79%)
-
-💰 FUNDS
-Available Cash: ₹13,032.30
-Utilised: ₹12,557.00
-```
-
-### Detailed Mode with Sorting
-```
-Zerodha Portfolio Status @ 2025-09-22_19-38-13 IST
-Holdings (sorted by day_change, desc):
---------------------------------------------------------------------------------------------------------------
-Symbol     | Exch | Qty | Avg     | LTP     | Invested | Value    | PnL     | PnL % | Day Change
---------------------------------------------------------------------------------------------------------------
-PERMAGN    | BSE  | 15  | 783.33  | 1083.05 | 11750.00 | 16245.75 | 4495.75 | 38.26 | 773.25
-MOLDTECH   | NSE  | 50  | 142.18  | 174.62  | 7109.24  | 8731.00  | 1621.76 | 22.81 | 632.00
-PAUSHAKLTD | BSE  | 1   | 4410.00 | 6874.55 | 4410.00  | 6874.55  | 2464.55 | 55.89 | 333.70
-...
---------------------------------------------------------------------------------------------------------------
-Total Invested: ₹111,079.08
-Current Value:  ₹127,351.05
-Unrealized PnL: ₹16,271.97 (14.65%)
-Day's Change: ₹810.50 (↗️ 0.64%)
-```
-Zerodha Portfolio Status @ 2025-09-22_19-32-49 IST
-
-📊 TODAY'S PERFORMANCE
-Portfolio Value: ₹127,351.05
-Total Invested: ₹111,079.08
-Holdings P&L: ₹16,271.97 (↗️ 14.65%)
-
-💹 TRADING PERFORMANCE
-Holdings Day Change: ₹810.50 (↗️ 0.64%)
-Positions Day Trading: ₹-73.90 (↘️ -0.06%)
-Net Positions P&L: ₹8,239.10 (↗️ 6.47%)
-Total P&L: ₹24,511.07 (↗️ 22.07%)
-
-🔥 TOP MOVERS
-📈 Top Gainers:
-  WAAREEENER: ₹1,349.65 (↗️ 64.12%)
-  PAUSHAKLTD: ₹2,464.55 (↗️ 55.89%)
-  PERMAGN: ₹4,495.75 (↗️ 38.26%)
-📉 Top Losers:
-  INDIGOPNTS: ₹-141.00 (↘️ -4.10%)
-  RAJOOENG: ₹-183.00 (↘️ -1.92%)
-  NH: ₹-127.20 (↘️ -1.79%)
-
-💰 FUNDS
-Available Cash: ₹13,032.30
-Utilised: ₹12,557.00
-```
-
-### Detailed Mode with Sorting
-```
-Zerodha Portfolio Status @ 2025-09-22_19-38-13 IST
-Holdings (sorted by day_change, desc):
---------------------------------------------------------------------------------------------------------------
-Symbol     | Exch | Qty | Avg     | LTP     | Invested | Value    | PnL     | PnL % | Day Change
---------------------------------------------------------------------------------------------------------------
-PERMAGN    | BSE  | 15  | 783.33  | 1083.05 | 11750.00 | 16245.75 | 4495.75 | 38.26 | 773.25
-MOLDTECH   | NSE  | 50  | 142.18  | 174.62  | 7109.24  | 8731.00  | 1621.76 | 22.81 | 632.00
-PAUSHAKLTD | BSE  | 1   | 4410.00 | 6874.55 | 4410.00  | 6874.55  | 2464.55 | 55.89 | 333.70
-...
---------------------------------------------------------------------------------------------------------------
-Total Invested: ₹111,079.08
-Current Value:  ₹127,351.05
-Unrealized PnL: ₹16,271.97 (14.65%)
-Day's Change: ₹810.50 (↗️ 0.64%)
-```
 Day's Change: ₹450.75 (↗️ 0.53%)
+--------------------------------------------------------------------------------------------------------------
 ```
-Zerodha Portfolio Status @ 2025-09-22_19-32-49 IST
+Zerodha Portfolio Status @ 2024-01-15_14-30-45 IST
 
 📊 TODAY'S PERFORMANCE
-Portfolio Value: ₹127,351.05
-Total Invested: ₹111,079.08
-Holdings P&L: ₹16,271.97 (↗️ 14.65%)
+Portfolio Value: ₹85,250.00
+Total Invested: ₹75,000.00
+Holdings P&L: ₹10,250.00 (↗️ 13.67%)
 
 💹 TRADING PERFORMANCE
-Holdings Day Change: ₹810.50 (↗️ 0.64%)
-Positions Day Trading: ₹-73.90 (↘️ -0.06%)
-Net Positions P&L: ₹8,239.10 (↗️ 6.47%)
-Total P&L: ₹24,511.07 (↗️ 22.07%)
+Holdings Day Change: ₹450.75 (↗️ 0.53%)
+Positions Day Trading: ₹-125.50 (↘️ -0.15%)
+Net Positions P&L: ₹2,850.00 (↗️ 3.34%)
+Total P&L: ₹13,100.00 (↗️ 17.47%)
 
 🔥 TOP MOVERS
 📈 Top Gainers:
-  WAAREEENER: ₹1,349.65 (↗️ 64.12%)
-  PAUSHAKLTD: ₹2,464.55 (↗️ 55.89%)
-  PERMAGN: ₹4,495.75 (↗️ 38.26%)
+  RELIANCE: ₹2,500.00 (↗️ 25.00%)
+  INFY: ₹1,800.00 (↗️ 18.00%)
+  TCS: ₹1,200.00 (↗️ 12.00%)
 📉 Top Losers:
-  INDIGOPNTS: ₹-141.00 (↘️ -4.10%)
-  RAJOOENG: ₹-183.00 (↘️ -1.92%)
-  NH: ₹-127.20 (↘️ -1.79%)
+  HDFC: ₹-300.00 (↘️ -3.00%)
+  ICICIBANK: ₹-150.00 (↘️ -1.50%)
+  SBIN: ₹-100.00 (↘️ -1.00%)
 
 💰 FUNDS
-Available Cash: ₹13,032.30
-Utilised: ₹12,557.00
+Available Cash: ₹15,000.00
+Utilised: ₹5,000.00
 ```
 
 ### Detailed Mode with Sorting
 ```
-Zerodha Portfolio Status @ 2025-09-22_19-38-13 IST
+Zerodha Portfolio Status @ 2024-01-15_14-30-45 IST
 Holdings (sorted by day_change, desc):
 --------------------------------------------------------------------------------------------------------------
 Symbol     | Exch | Qty | Avg     | LTP     | Invested | Value    | PnL     | PnL % | Day Change
 --------------------------------------------------------------------------------------------------------------
-PERMAGN    | BSE  | 15  | 783.33  | 1083.05 | 11750.00 | 16245.75 | 4495.75 | 38.26 | 773.25
-MOLDTECH   | NSE  | 50  | 142.18  | 174.62  | 7109.24  | 8731.00  | 1621.76 | 22.81 | 632.00
-PAUSHAKLTD | BSE  | 1   | 4410.00 | 6874.55 | 4410.00  | 6874.55  | 2464.55 | 55.89 | 333.70
+RELIANCE   | NSE  | 10  | 2450.00 | 2500.00 | 24500.00 | 25000.00 | 500.00  | 2.04  | 250.00
+INFY       | NSE  | 20  | 1400.00 | 1450.00 | 28000.00 | 29000.00 | 1000.00 | 3.57  | 180.00
+TCS        | NSE  | 5   | 3200.00 | 3300.00 | 16000.00 | 16500.00 | 500.00  | 3.13  | 120.00
+HDFC       | NSE  | 8   | 1600.00 | 1550.00 | 12800.00 | 12400.00 | -400.00 | -3.13 | -75.00
+ICICIBANK  | NSE  | 15  | 800.00  | 790.00  | 12000.00 | 11850.00 | -150.00 | -1.25 | -45.00
 ...
 --------------------------------------------------------------------------------------------------------------
-Total Invested: ₹111,079.08
-Current Value:  ₹127,351.05
-Unrealized PnL: ₹16,271.97 (14.65%)
-Day's Change: ₹810.50 (↗️ 0.64%)
-```
+Total Invested: ₹75,000.00
+Current Value:  ₹85,250.00
+Unrealized PnL: ₹10,250.00 (13.67%)
 Day's Change: ₹450.75 (↗️ 0.53%)
+--------------------------------------------------------------------------------------------------------------
 ```
 ====================================================================================================
 Zerodha Portfolio Status @ 2025-09-22_19-32-49 IST
